@@ -1,2 +1,2 @@
-# Simple IP Logger in PHP
-![](https://github.com/ClementMichaux/simple_ip_logger/blob/master/preview.gif)
+# Simple IP Logger and URLShortener in PHP
+![](https://github.com/ClementMichaux/simple-iplogger-and-url-shortener/blob/main/preview.gif)
