@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 07, 2020 at 02:48 PM
+-- Generation Time: Jan 13, 2021 at 03:29 PM
 -- Server version: 8.0.22-0ubuntu0.20.10.2
 -- PHP Version: 7.4.9
 
@@ -35,7 +35,7 @@ CREATE TABLE `log` (
   `ip` varchar(255) NOT NULL,
   `user_agent` varchar(255) NOT NULL,
   `clicked_at` datetime NOT NULL,
-  `tracker_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+  `tracker_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -48,7 +48,7 @@ CREATE TABLE `short_url` (
   `id` int NOT NULL,
   `url` varchar(255) NOT NULL,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `tracker_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+  `tracker_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -70,13 +70,15 @@ CREATE TABLE `tracker` (
 -- Indexes for table `log`
 --
 ALTER TABLE `log`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tracker_id` (`tracker_id`);
 
 --
 -- Indexes for table `short_url`
 --
 ALTER TABLE `short_url`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tracker_id` (`tracker_id`);
 
 --
 -- Indexes for table `tracker`
@@ -105,6 +107,22 @@ ALTER TABLE `short_url`
 --
 ALTER TABLE `tracker`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `log`
+--
+ALTER TABLE `log`
+  ADD CONSTRAINT `log_ibfk_1` FOREIGN KEY (`tracker_id`) REFERENCES `tracker` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `short_url`
+--
+ALTER TABLE `short_url`
+  ADD CONSTRAINT `short_url_ibfk_1` FOREIGN KEY (`tracker_id`) REFERENCES `tracker` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
